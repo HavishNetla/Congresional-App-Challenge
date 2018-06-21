@@ -1,0 +1,24 @@
+{
+  "dependencies": {
+    "next": "^6.0.3",
+    "react": "^16.3.2",
+    "react-bootstrap-table": "^4.3.1",
+    "react-dom": "^16.3.2",
+    "react-syntax-highlighter": "^7.0.4",
+    "react-transition-group": "^2.3.1",
+    "reactstrap": "^6.0.1"
+  },
+  "scripts": {
+    "dev": "next",
+    "build": "next build",
+    "start": "next start"
+  },
+  "name": "congresional_app_challenge",
+  "version": "1.0.0",
+  "main": "./pages/index.js",
+  "author": "Havish",
+  "license": "MIT",
+  "devDependencies": {
+    "eslint-config-lemon": "^0.1.6"
+  }
+}
