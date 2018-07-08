@@ -1,10 +1,14 @@
+import Navbar from './Navbar'
+
 const Layout = ({ children }) => (
   <div>
     <link
       rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css"
+      href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"
     />
+    <Navbar />
     {children}
   </div>
 )
+
 export default Layout

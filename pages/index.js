@@ -1,19 +1,17 @@
-import {
-  Container,
-  Row,
-  Col,
-  Button,
-  Jumbotron,
-  ListGroup,
-  ListGroupItem,
-} from 'reactstrap'
+import { Container, Button } from 'semantic-ui-react'
+import Link from 'next/link'
+
 import Layout from '../components/Layout'
 
 const Index = () => (
   <Layout class="body">
-    <Button outline color="danger">
-      danger
-    </Button>
+    <Container textAlign="center">
+      <Link href="/addFood">
+        <Button inverted color="green">
+          Add a New Food!
+        </Button>
+      </Link>
+    </Container>
   </Layout>
 )
 
