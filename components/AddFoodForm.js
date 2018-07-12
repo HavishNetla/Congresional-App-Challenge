@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
-import { Container, Form } from 'semantic-ui-react'
+import { Container, Form, Button } from 'semantic-ui-react'
+import request from 'superagent'
 
 class AddFoodForm extends Component {
   state = {
@@ -21,6 +22,20 @@ class AddFoodForm extends Component {
       submittedNumber: number,
       submittedFood: food,
     })
+
+    request
+      .post('http://localhost:8080/api/foods')
+      .send({
+        userName: name,
+        foodName: food,
+        phoneNumber: number,
+      })
+      .end((err, res) => {
+        if (err) throw err
+
+        console.log(res.body)
+      })
+    console.log(`${name} ${number} ${food}`)
   }
 
   render() {
