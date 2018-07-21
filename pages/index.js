@@ -1,17 +1,11 @@
-import { Container, Button } from 'semantic-ui-react'
-import Link from 'next/link'
+import Button from '@material-ui/core/Button'
 
 import Layout from '../components/Layout'
+import AddFoodForm from '../components/AddFoodForm'
 
 const Index = () => (
   <Layout class="body">
-    <Container textAlign="center">
-      <Link href="/addFood">
-        <Button inverted color="green">
-          Add a New Food!
-        </Button>
-      </Link>
-    </Container>
+    <AddFoodForm />
   </Layout>
 )
 

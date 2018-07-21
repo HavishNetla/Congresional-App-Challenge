@@ -6,8 +6,17 @@ const Layout = ({ children }) => (
       rel="stylesheet"
       href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"
     />
-    <Navbar />
-    {children}
+    <link
+      rel="stylesheet"
+      href="//fonts.googleapis.com/css?family=Roboto:300,400,500"
+    />
+    <link
+      rel="stylesheet"
+      href="//fonts.googleapis.com/css?family=Roboto:300,400,500"
+    />
+
+    <Navbar color="grey" />
+    <div>{children}</div>
   </div>
 )
 
