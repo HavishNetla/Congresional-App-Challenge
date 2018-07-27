@@ -14,9 +14,19 @@ const Layout = ({ children }) => (
       rel="stylesheet"
       href="//fonts.googleapis.com/css?family=Roboto:300,400,500"
     />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
 
     <Navbar color="grey" />
-    <div>{children}</div>
+    <div
+      style={{
+        flexGrow: 1,
+      }}
+    >
+      {children}
+    </div>
   </div>
 )
 

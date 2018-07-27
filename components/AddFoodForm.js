@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import { Container, Form } from 'semantic-ui-react'
-import Button from '@material-ui/core/Button'
 import request from 'superagent'
 
 class AddFoodForm extends Component {

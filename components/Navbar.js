@@ -32,7 +32,7 @@ class Navbar extends Component {
               active={activeItem === 'viewFoods'}
               onClick={this.handleItemClick}
             >
-              View Foods
+              Foods
             </Menu.Item>
           </Link>
           <Link href="/aboutUs">
