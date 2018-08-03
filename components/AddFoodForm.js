@@ -1,5 +1,12 @@
 import React, { Component } from 'react'
 import { Container, Form } from 'semantic-ui-react'
+import Dialog from '@material-ui/core/Dialog'
+import DialogContent from '@material-ui/core/DialogContent'
+import DialogContentText from '@material-ui/core/DialogContentText'
+import DialogTitle from '@material-ui/core/DialogTitle'
+import Button from '@material-ui/core/Button'
+import Paper from '@material-ui/core/Paper'
+import Grid from '@material-ui/core/Grid'
 import request from 'superagent'
 
 class AddFoodForm extends Component {
@@ -21,6 +28,8 @@ class AddFoodForm extends Component {
     submittedCity: '',
     submittedState: '',
     submittedZip: '',
+
+    open: false,
   }
 
   handleChange = (e, { name, value }) => this.setState({ [name]: value })
@@ -49,7 +58,7 @@ class AddFoodForm extends Component {
     })
 
     request
-      .post('http://localhost:8080/api/foods')
+      .post('https://node-api-kthsrjzalv.now.sh/api/foods')
       .send({
         name,
         food,
@@ -59,7 +68,7 @@ class AddFoodForm extends Component {
         city,
         state,
         zip,
-        avalible: true,
+        avalible: 'true',
       })
       .end((err, res) => {
         if (err) throw err
@@ -69,6 +78,16 @@ class AddFoodForm extends Component {
     console.log(
       `${name} ${number} ${food} ${address1} ${address2} ${city} ${state} ${zip}`,
     )
+
+    this.setState({ open: true })
+  }
+
+  handleClickOpen = () => {
+    this.setState({ open: true })
+  }
+
+  handleClose = () => {
+    this.setState({ open: false })
   }
 
   render() {
@@ -94,83 +113,117 @@ class AddFoodForm extends Component {
 
     return (
       <div>
-        <Container textAlign="center">
-          <Form onSubmit={this.handleSubmit} style={{ padding: 50 }}>
-            <Form.Group widths="equal">
-              <Form.Input
-                label="Name"
-                placeholder="Name"
-                name="name"
-                value={name}
-                onChange={this.handleChange}
-                required
-              />
-              <Form.Input
-                label="Phone Number"
-                placeholder="Phone Number"
-                name="number"
-                value={number}
-                onChange={this.handleChange}
-                required
-              />
-              <Form.Input
-                label="Food"
-                placeholder="Food"
-                name="food"
-                value={food}
-                onChange={this.handleChange}
-                required
-              />
-            </Form.Group>
+        <Grid
+          style={{ height: 318, paddingTop: 200 }}
+          container
+          alignContent="center"
+          alignItems="center"
+          justify="center"
+        >
+          <Paper
+            style={{
+              width: 1100,
+              backgroundColor: '#4E5156',
+            }}
+            elevation={4}
+          >
+            <div>
+              <Form
+                inverted
+                onSubmit={this.handleSubmit}
+                style={{ padding: 50 }}
+              >
+                <Form.Group widths="equal">
+                  <Form.Input
+                    label="Name"
+                    placeholder="Name"
+                    name="name"
+                    value={name}
+                    onChange={this.handleChange}
+                    required
+                  />
+                  <Form.Input
+                    label="Phone Number"
+                    placeholder="Phone Number"
+                    name="number"
+                    value={number}
+                    onChange={this.handleChange}
+                    required
+                  />
+                  <Form.Input
+                    label="Food"
+                    placeholder="Food"
+                    name="food"
+                    value={food}
+                    onChange={this.handleChange}
+                    required
+                  />
+                </Form.Group>
 
-            <Form.Group>
-              <Form.Input
-                label="Street Address 1"
-                placeholder="Street address 1"
-                name="address1"
-                value={address1}
-                onChange={this.handleChange}
-                required
-              />
-              <Form.Input
-                label="Street Address 2"
-                placeholder="Street address 2"
-                name="address2"
-                value={address2}
-                onChange={this.handleChange}
-              />
-              <Form.Input
-                label="City"
-                placeholder="City"
-                name="city"
-                value={city}
-                onChange={this.handleChange}
-                required
-              />
-              <Form.Input
-                label="State"
-                placeholder="State"
-                name="state"
-                value={state}
-                onChange={this.handleChange}
-                required
-              />
-              <Form.Input
-                label="Zip"
-                placeholder="Zip"
-                name="zip"
-                value={zip}
-                onChange={this.handleChange}
-                required
-              />
-            </Form.Group>
-            <Form.Checkbox
-              label="I agree to the Terms and Conditions"
-              required
-            />
-            <Form.Button content="Submit" />
-          </Form>
-        </Container>
+                <Form.Group widths="equal">
+                  <Form.Input
+                    label="Street Address 1"
+                    placeholder="Street address 1"
+                    name="address1"
+                    value={address1}
+                    onChange={this.handleChange}
+                    required
+                  />
+                  <Form.Input
+                    label="Street Address 2"
+                    placeholder="Street address 2"
+                    name="address2"
+                    value={address2}
+                    onChange={this.handleChange}
+                  />
+                  <Form.Input
+                    label="City"
+                    placeholder="City"
+                    name="city"
+                    value={city}
+                    onChange={this.handleChange}
+                    required
+                  />
+                  <Form.Input
+                    label="State"
+                    placeholder="State"
+                    name="state"
+                    value={state}
+                    onChange={this.handleChange}
+                    required
+                  />
+                  <Form.Input
+                    label="Zip"
+                    placeholder="Zip"
+                    name="zip"
+                    value={zip}
+                    onChange={this.handleChange}
+                    required
+                  />
+                </Form.Group>
+                <Form.Checkbox
+                  label="I agree to the Terms and Conditions"
+                  required
+                />
+                <Form.Button content="Submit" onClick={this.handleClickOpen} />
+              </Form>
+            </div>
+          </Paper>
+        </Grid>
+
+        <Dialog
+          open={this.state.open}
+          onClose={this.handleClose}
+          aria-labelledby="alert-dialog-title"
+          aria-describedby="alert-dialog-description"
+        >
+          <DialogTitle id="alert-dialog-title">Food Submited</DialogTitle>
+          <DialogContent>
+            <DialogContentText id="alert-dialog-description">
+              You can view your food(s) in the food tab
+            </DialogContentText>
+          </DialogContent>
+        </Dialog>
       </div>
     )
   }

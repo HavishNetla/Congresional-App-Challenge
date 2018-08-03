@@ -1,6 +1,6 @@
 import Nav from './Nav'
 
-const Layout = ({ children }) => (
+const HomeLayout = ({ children }) => (
   <div>
     <link
       rel="stylesheet"
@@ -20,16 +20,18 @@ const Layout = ({ children }) => (
     />
 
     <Nav />
-    <div
-      style={{
-        backgroundColor: '#009DDC',
-        height: 361,
-        width: '100vw',
-      }}
-    >
-      {children}
+    <div style={{ height: 719, width: '100vw', backgroundColor: '#EAC435' }}>
+      <div
+        style={{
+          backgroundColor: '#009DDC',
+          height: 361,
+          width: '100vw',
+        }}
+      >
+        {children}
+      </div>
     </div>
   </div>
 )
 
-export default Layout
+export default HomeLayout

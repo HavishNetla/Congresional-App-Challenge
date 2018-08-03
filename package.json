@@ -30,5 +30,6 @@
   "devDependencies": {
     "babel-plugin-styled-components": "^1.1.5",
     "eslint-config-lemon": "^0.1.6"
-  }
+  },
+  "repository": "https://github.com/havish10/Congresional-App-Challenge.git"
 }

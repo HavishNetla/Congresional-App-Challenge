@@ -1,3 +1,6 @@
+/* eslint-disable class-methods-use-this */
+/* eslint-disable no-return-assign */
+
 import React, { Component } from 'react'
 import request from 'superagent'
 import Grid from '@material-ui/core/Grid'
@@ -15,24 +18,65 @@ class FoodList extends Component {
     this.state = {
       foods: [],
     }
+    this.TakeButton.bind(this)
   }
 
   componentDidMount() {
-    request.get('http://localhost:8080/api/foods').end((err, res) => {
-      if (err) throw err
-      this.setState({ foods: res.body })
-    })
+    request
+      .get('https://node-api-kthsrjzalv.now.sh/api/foods')
+      .end((err, res) => {
+        if (err) throw err
+        this.setState({ foods: res.body })
+      })
   }
 
   delete(e, props) {
     e.preventDefault()
 
     request
-      .delete(`http://localhost:8080/api/foods/${props}`)
+      .delete(`https://node-api-kthsrjzalv.now.sh/api/foods/${props}`)
       .end((err, res) => {
         if (err) throw err
         console.log('deleted')
       })
+  }
+
+  TakeButton(props) {
+    if (props.avalible === 'true') {
+      return (
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() =>
+            request
+              .put(`https://node-api-kthsrjzalv.now.sh/api/foods/${props.id}`)
+              .send({
+                name: props.name,
+                food: props.food,
+                number: props.number,
+                address1: props.address1,
+                address2: props.address2,
+                city: props.city,
+                state: props.state,
+                zip: props.zip,
+                avalible: 'false',
+              })
+              .end((err, res) => {
+                if (err) throw err
+
+                console.log(res.body)
+              })
+          }
+        >
+          Claim Food
+        </Button>
+      )
+    }
+    return (
+      <Button variant="contained" color="primary" disabled>
+        Claim Food
+      </Button>
+    )
   }
 
   render() {
@@ -43,9 +87,20 @@ class FoodList extends Component {
             flexGrow: 1,
           }}
         >
-          <Grid container spacing={24}>
+          <Grid container spacing={16}>
             {this.state.foods.map(
-              ({ _id, name, food, address1, address2, city, state, zip }) => (
+              ({
+                _id,
+                name,
+                food,
+                address1,
+                address2,
+                city,
+                state,
+                zip,
+                number,
+                avalible,
+              }) => (
                 <Grid item key={_id}>
                   <Card
                     style={{
@@ -62,7 +117,7 @@ class FoodList extends Component {
                         }}
                         color="textSecondary"
                       >
-                        {name}
+                        {name}, {number}
                       </Typography>
                       <Typography variant="headline" component="h2">
                         {food}
@@ -71,23 +126,29 @@ class FoodList extends Component {
                         {`${address1}, ${address2}`}
                         <br />
                         {`${city}, ${state}, ${zip}`}
+                        <br />
+                        {avalible}
                       </Typography>
-                      <div
-                        style={{
-                          display: 'flex',
-                          textAlign: 'center',
-                          marginTop: 15,
-                          paddingLeft: 227 / 2 - 48,
-                        }}
-                      >
+
+                      <div style={{ paddingTop: '10px' }}>
                         <Button
-                          size="small"
-                          variant="fab"
                           aria-label="Delete"
                           onClick={e => this.delete(e, _id)}
                         >
                           <DeleteIcon />
                         </Button>
+                        <this.TakeButton
+                          id={_id}
+                          name={name}
+                          food={food}
+                          number={number}
+                          address1={address1}
+                          address2={address2}
+                          city={city}
+                          state={state}
+                          zip={zip}
+                          avalible={avalible}
+                        />
                       </div>
                     </CardContent>
                   </Card>
