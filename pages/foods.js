@@ -9,6 +9,7 @@ import CardContent from '@material-ui/core/CardContent'
 import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import DeleteIcon from '@material-ui/icons/Delete'
+import Chip from '@material-ui/core/Chip'
 import Layout from '../components/Layout'
 
 class FoodList extends Component {
@@ -22,19 +23,17 @@ class FoodList extends Component {
   }
 
   componentDidMount() {
-    request
-      .get('https://node-api-kthsrjzalv.now.sh/api/foods')
-      .end((err, res) => {
-        if (err) throw err
-        this.setState({ foods: res.body })
-      })
+    request.get('https://cac-2018-api.now.sh/api/foods/').end((err, res) => {
+      if (err) throw err
+      this.setState({ foods: res.body })
+    })
   }
 
   delete(e, props) {
     e.preventDefault()
 
     request
-      .delete(`https://node-api-kthsrjzalv.now.sh/api/foods/${props}`)
+      .delete(`https://cac-2018-api.now.sh/api/foods/${props}`)
       .end((err, res) => {
         if (err) throw err
         console.log('deleted')
@@ -49,7 +48,7 @@ class FoodList extends Component {
           color="primary"
           onClick={() =>
             request
-              .put(`https://node-api-kthsrjzalv.now.sh/api/foods/${props.id}`)
+              .put(`https://cac-2018-api.now.sh/api/foods/${props.id}`)
               .send({
                 name: props.name,
                 food: props.food,
@@ -80,6 +79,11 @@ class FoodList extends Component {
   }
 
   render() {
+    const ChipStyle = {
+      marginTop: 5,
+      marginLeft: 5,
+      marginRight: 5,
+    }
     return (
       <Layout>
         <div
@@ -100,6 +104,7 @@ class FoodList extends Component {
                 zip,
                 number,
                 avalible,
+                keywords,
               }) => (
                 <Grid item key={_id}>
                   <Card
@@ -126,10 +131,10 @@ class FoodList extends Component {
                         {`${address1}, ${address2}`}
                         <br />
                         {`${city}, ${state}, ${zip}`}
-                        <br />
-                        {avalible}
                       </Typography>
-
+                      {keywords.map(keyword => (
+                        <Chip key={keyword} style={ChipStyle} label={keyword} />
+                      ))}
                       <div style={{ paddingTop: '10px' }}>
                         <Button
                           aria-label="Delete"

@@ -1,11 +1,10 @@
-import { Container, Button } from 'semantic-ui-react'
-import Link from 'next/link'
+import { Container } from 'semantic-ui-react'
 
 import Layout from '../components/Layout'
 
 const AboutUs = () => (
   <Layout class="body">
-    <Container textAlign="center">asdasdasdasdddddddddddd</Container>
+    <Container textAlign="center">About Us Page</Container>
   </Layout>
 )
 

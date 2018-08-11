@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
-import { Container, Form } from 'semantic-ui-react'
+import { Form } from 'semantic-ui-react'
 import Dialog from '@material-ui/core/Dialog'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogContentText from '@material-ui/core/DialogContentText'
 import DialogTitle from '@material-ui/core/DialogTitle'
-import Button from '@material-ui/core/Button'
 import Paper from '@material-ui/core/Paper'
 import Grid from '@material-ui/core/Grid'
 import request from 'superagent'
@@ -19,6 +18,7 @@ class AddFoodForm extends Component {
     city: '',
     state: '',
     zip: '',
+    keywords: '',
 
     submittedName: '',
     submittedNumber: '',
@@ -44,6 +44,7 @@ class AddFoodForm extends Component {
       city,
       state,
       zip,
+      keywords,
     } = this.state
 
     this.setState({
@@ -55,10 +56,11 @@ class AddFoodForm extends Component {
       submittedCity: city,
       submittedState: state,
       submittedZip: zip,
+      submittedKeywords: keywords,
     })
 
     request
-      .post('https://node-api-kthsrjzalv.now.sh/api/foods')
+      .post('https://cac-2018-api.now.sh/api/foods')
       .send({
         name,
         food,
@@ -68,6 +70,7 @@ class AddFoodForm extends Component {
         city,
         state,
         zip,
+        keywords: keywords === '' ? [] : keywords.split(' '),
         avalible: 'true',
       })
       .end((err, res) => {
@@ -100,6 +103,7 @@ class AddFoodForm extends Component {
       city,
       state,
       zip,
+      keywords,
 
       submittedName,
       submittedNumber,
@@ -109,6 +113,7 @@ class AddFoodForm extends Component {
       submittedCity,
       submittedState,
       submittedZip,
+      submittedKeywords,
     } = this.state
 
     return (
@@ -125,7 +130,7 @@ class AddFoodForm extends Component {
               width: 1100,
               backgroundColor: '#4E5156',
             }}
-            elevation={4}
+            elevation={20}
           >
             <div>
               <Form
@@ -199,6 +204,15 @@ class AddFoodForm extends Component {
                     value={zip}
                     onChange={this.handleChange}
                     required
+                  />
+                </Form.Group>
+                <Form.Group widths="equal">
+                  <Form.Input
+                    label="Keywords"
+                    placeholder="Large, Container, Hot, Burgers"
+                    name="keywords"
+                    value={keywords}
+                    onChange={this.handleChange}
                   />
                 </Form.Group>
                 <Form.Checkbox
