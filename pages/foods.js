@@ -10,6 +10,7 @@ import Typography from '@material-ui/core/Typography'
 import Button from '@material-ui/core/Button'
 import DeleteIcon from '@material-ui/icons/Delete'
 import Chip from '@material-ui/core/Chip'
+import SvgIcon from '@material-ui/core/SvgIcon'
 import Layout from '../components/Layout'
 
 class FoodList extends Component {
@@ -27,6 +28,28 @@ class FoodList extends Component {
       if (err) throw err
       this.setState({ foods: res.body })
     })
+  }
+
+  onWatchClick(props) {
+    request
+      .put(`https://cac-2018-api.now.sh/api/foods/${props.id}`)
+      .send({
+        name: props.name,
+        food: props.food,
+        number: props.number,
+        address1: props.address1,
+        address2: props.address2,
+        city: props.city,
+        state: props.state,
+        zip: props.zip,
+        avalible: 'false',
+        watchCount: (props.watchCount += 1),
+      })
+      .end((err, res) => {
+        if (err) throw err
+
+        console.log(res.body)
+      })
   }
 
   delete(e, props) {
@@ -59,6 +82,7 @@ class FoodList extends Component {
                 state: props.state,
                 zip: props.zip,
                 avalible: 'false',
+                watchCount: props.watchCount,
               })
               .end((err, res) => {
                 if (err) throw err
@@ -71,10 +95,51 @@ class FoodList extends Component {
         </Button>
       )
     }
+
     return (
       <Button variant="contained" color="primary" disabled>
         Claim Food
       </Button>
+    )
+  }
+
+  WatchButton(props) {
+    return (
+      <div>
+        <Button
+          variant="fab"
+          color="primary"
+          aria-label="Watch"
+          mini="true"
+          style={{ marginLeft: 10 }}
+          onClick={() =>
+            request
+              .put(`https://cac-2018-api.now.sh/api/foods/${props.id}`)
+              .send({
+                name: props.name,
+                food: props.food,
+                number: props.number,
+                address1: props.address1,
+                address2: props.address2,
+                city: props.city,
+                state: props.state,
+                zip: props.zip,
+                avalible: 'false',
+                watchCount: (props.watchCount += 1),
+              })
+              .end((err, res) => {
+                if (err) throw err
+
+                console.log(res.body)
+              })
+          }
+        >
+          <SvgIcon>
+            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+          </SvgIcon>
+        </Button>
+        <p style={{ display: 'inline', marginLeft: 10 }}>{props.watchCount}</p>
+      </div>
     )
   }
 
@@ -105,13 +170,14 @@ class FoodList extends Component {
                 number,
                 avalible,
                 keywords,
+                watchCount,
               }) => (
                 <Grid item key={_id}>
                   <Card
                     style={{
                       margin: 20,
-                      width: 275,
-                      maxWidth: 275,
+                      width: 300,
+                      maxWidth: 300,
                     }}
                   >
                     <CardContent>
@@ -153,7 +219,23 @@ class FoodList extends Component {
                           state={state}
                           zip={zip}
                           avalible={avalible}
+                          watchCount={watchCount}
                         />
+                        <Button
+                          variant="fab"
+                          color="primary"
+                          aria-label="Watch"
+                          mini="true"
+                          style={{ marginLeft: 10 }}
+                          onClick={this.onWatchClick()}
+                        >
+                          <SvgIcon>
+                            <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z" />
+                          </SvgIcon>
+                        </Button>
+                        <p style={{ display: 'inline', marginLeft: 10 }}>
+                          {watchCount}
+                        </p>
                       </div>
                     </CardContent>
                   </Card>

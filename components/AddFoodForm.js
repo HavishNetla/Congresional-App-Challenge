@@ -72,6 +72,7 @@ class AddFoodForm extends Component {
         zip,
         keywords: keywords === '' ? [] : keywords.split(' '),
         avalible: 'true',
+        watchCount: 0,
       })
       .end((err, res) => {
         if (err) throw err
